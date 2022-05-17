@@ -1,0 +1,319 @@
+<html lang = "en" >
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel = "stylesheet" href = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+      <script src = "https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+      <script src= "https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-sanitize.min.js"></script>
+      
+      <style>
+         .container{
+            margin: 3rem;
+         }
+         .content {
+            width: 100%;
+            height:100%;
+         }
+         .content-item {
+            margin: 2rem;
+            right: 45px;
+         }
+         .form {
+            /*min-width: 50rem;*/
+         }
+         .md-whiteframe-5dp {
+            width: 650px;
+         }
+         .md-whiteframe-6dp {
+            width: 600px;
+         }
+         .navbar-brand {
+            white-space: normal;
+            image-rendering:   -o-crisp-edges;         /* Opera */
+            image-rendering: -webkit-optimize-contrast;/* Webkit (non-standard naming) */
+            image-rendering: crisp-edges;
+            -ms-interpolation-mode: nearest-neighbor;  /* IE (non-standard property) */
+      }
+      </style>
+      </style>
+
+      <script type = "text/javascript">    
+         var app = angular.module('myApp', ['ngMaterial', 'ngMessages', 'ngSanitize']).config(function ($mdThemingProvider) {
+         $mdThemingProvider.theme('default')
+           .primaryPalette('amber', {
+             'default': '400', // by default use shade 400 from the pink palette for primary intentions
+             'hue-1': '200', // use shade 100 for the <code>md-hue-1</code> class
+             'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
+             'hue-3': 'A100'
+           })
+           .accentPalette('green', {
+             'default': '300'
+           })
+           .warnPalette('blue', {
+             'default': '900'
+           });
+         });
+
+         app.controller("myCtrl", function($scope, $http, $sce)
+         {
+
+         	$scope.sub = function()
+         	{
+         		//alert("called");
+         		var input = $scope.input;
+         		
+         		var file = "";
+         		if ($scope.c1)
+         		{
+         			file = "ip";
+         		}
+         		else if ($scope.c2)
+         		{
+         			file = "ipblacklist"
+         		}
+         		else if ($scope.c3)
+         		{
+         			file = "tor"
+         		}
+         		else if ($scope.c4)
+         		{
+         			file = "username"
+         		}
+         		else if ($scope.c5)
+         		{
+         			file = "twitteractivity"
+         		}
+         		else if ($scope.c6)
+         		{
+         			file = "redditactivity"
+         		}
+         		else if ($scope.c7)
+         		{
+         			file = "wikipedia"
+         		}
+         		else if ($scope.c8)
+         		{
+         			file = "domain"
+         		}
+         		else if ($scope.c9)
+         		{
+         			file = "detaileddomain"
+         		}
+         		else if ($scope.c10)
+         		{
+         			file = "domainemails"
+         		}
+         		else if ($scope.c11)
+         		{
+         			file = "domainmap"
+         		}
+         		else if ($scope.c12)
+         		{
+         			file = "hashes"
+         		}
+         		else if ($scope.c13)
+         		{
+         			file = "emailaddress"
+         		}
+         		else if ($scope.c14)
+         		{
+         			file = "emailchecker"
+         		}
+         		else if ($scope.c15)
+         		{
+         			file = "emailleak"
+         		}
+         		else if ($scope.c16)
+         		{
+         			file = "pastebin"
+         		}
+         		else if ($scope.c17)
+         		{
+         			file = "virustotal"
+         		}
+         		else if ($scope.c18)
+         		{
+         			file = "fakenewsdetection"
+         		}
+         		else if ($scope.c19)
+         		{
+         			file = "deepfakedetection"
+         		}
+         		else if ($scope.c20)
+         		{
+         			file = "deblurimages"
+         		}
+         		$http.post('http://localhost:3000/myaction', {"input":input, "file":file}).then(function(response){
+         			$scope.answer = $sce.trustAsHtml(response.data);
+         		});
+         	}
+         })   
+
+      </script>
+   </head>
+   
+   <body ng-app = "myApp" ng-controller="myCtrl" ng-cloak>
+      
+
+      <md-toolbar class = "md-warn">
+         <div class = "md-toolbar-tools">
+            <a class="navbar-brand brand-logo" href="/"><img style='height: 40px; image-rendering: auto;' src="img/sentryicon.png" /></a>
+            <h2 class = "md-flex">&nbsp;&nbsp;SENTRY</h2>
+         </div>
+      </md-toolbar>
+      
+      
+      <div class = "container" layout = "row" layout-align="left ">
+         <md-whiteframe class="md-whiteframe-5dp"   class="content">
+
+            <div class="content-item">
+               <h2 class = "md-flex">INPUT</h2>
+               <form ng-submit="sub()" class="form" layout="column" >
+                  <md-input-container>
+                     <label>Scan Name</label>
+                     <input name="name" id="name">
+                  </md-input-container>
+                  <md-input-container>
+                     <label>Scan Input</label>
+                     <input name="input" ng-model = "input" id="input">
+                  </md-input-container>
+
+                  <md-checkbox name="c1" id="c1" ng-model="c1">
+                     <div class="row">
+                     IP Information
+                     </div>
+                  </md-checkbox>
+
+                  <md-checkbox name="c2" id="c2" ng-model="c2">
+                     <div clss="row">
+                     IP Blacklist Check
+                     </div>
+                  </md-checkbox>
+
+                  <md-checkbox name="c3" id="c3" ng-model="c3">
+                     <div class="row">
+                     Tor Exit Node Check
+                     </div>
+                  </md-checkbox>
+
+                  <md-checkbox name="c18" id="c18" ng-model="c18">
+                     <div class="row">
+                     Fake News Detection (Machine Learning)
+                     </div>
+                  </md-checkbox>
+
+                  <md-checkbox name="c4" id="c4" ng-model="c4">
+                     <div class="row">
+                        Username Check
+                     </div>
+                  </md-checkbox>
+                  
+                  <md-checkbox name="c5" id="c5" ng-model="c5">
+                     <div class="row">
+                        Twitter Activity Analysis
+                     </div>
+                  </md-checkbox>
+
+                  <md-checkbox name="c6" id="c6" ng-model="c6">
+                     <div class="row">
+                        Reddit Activity Analysis
+                     </div>
+                  </md-checkbox>
+
+                  <md-checkbox name="c20" id="c20" ng-model="c20">
+                     <div class="row">
+                     Blurred Images Restoration (Machine Learning)
+                     </div>
+                  </md-checkbox>
+               
+                  <md-checkbox name="c8" id="c8" ng-model="c8">
+                     <div class="row">
+                        Domain Name Information
+                     </div>
+                  </md-checkbox>
+                  
+                  <md-checkbox name="c9" id="c9" ng-model="c9">
+                     <div class="row">
+                  Detailed Domain Name Information
+               </div>
+                  </md-checkbox>
+                  
+                  <md-checkbox name="c10" id="c10" ng-model="c10">
+                     <div class="row">
+                  Domain Name's Email Adresses
+               </div>
+                  </md-checkbox>
+                                    
+                  <md-checkbox name="c11" id="c11" ng-model="c11">
+                     <div class="row">
+                  Domain Name's DNS Map
+               </div>
+                  </md-checkbox>
+                  
+                  <md-checkbox name="c13" id="c13" ng-model="c13">
+                     <div class="row">
+                  Email Address Validity Check
+               </div>
+                  </md-checkbox>
+
+                  <md-checkbox name="c14" id="c14" ng-model="c14">
+                     <div class="row">
+                        Email Finder
+                     </div>
+                  </md-checkbox>
+                  
+                  <md-checkbox name="c15" id="c15" ng-model="c15">
+                     <div class="row">
+                  Email Address Leak Check
+               </div>
+                  </md-checkbox>
+                  
+                  <md-checkbox name="c16" id="c16" ng-model="c16">
+                     <div class="row">
+                  Email Address Pastebin Leak Check
+               </div>
+                  </md-checkbox>
+
+                  <md-checkbox name="c19" id="c19" ng-model="c19">
+                     <div class="row">
+                     Deepfake Detection (Machine Learning)
+                     </div>
+                  </md-checkbox>
+                  
+                  <md-checkbox name="c17" id="c17" ng-model="c17">
+                     <div class="row">
+                        Malware Analysis
+                     </div>
+                  </md-checkbox>
+
+                  <md-checkbox name="c7" id="c7" ng-model="c7">
+                     <div class="row">
+                        Wikipedia Edits
+                     </div>
+                  </md-checkbox>
+
+                  <md-checkbox name="c12" id="c12" ng-model="c12">
+                     <div class="row">
+                  Hash Cracking
+               </div>
+                  </md-checkbox>
+                                                                                          
+                  <md-button type="submit" class="md-warn md-raised">Run Scan</md-button>
+               </form>
+            </div>         
+         </md-whiteframe>
+
+            <md-whiteframe class="md-whiteframe-5dp"   class="content">
+
+               <div class="content-item">
+                  <h2 class = "md-flex">OUTPUT</h2>
+		  <div class="content-item"><span = ng-bind-html = "answer"></span>
+                  </div>
+	       </div>
+          </md-whiteframe>  
+      </div>
+   </body>
+</html>
